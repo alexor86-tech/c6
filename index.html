@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="theme-dark">
 <head>
   <!-- Явное указание кодировки UTF-8 -->
   <meta charset="utf-8" />
@@ -7,6 +7,69 @@
   <title>Простой калькулятор</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    :root
+    {
+      --color-body-bg: #f3f4f6;
+      --color-panel-bg: #111827;
+      --color-panel-text: #f9fafb;
+      --color-display-bg: #020617;
+      --color-display-subtext: #9ca3af;
+      --color-button-bg: #1f2937;
+      --color-button-text: #e5e7eb;
+      --color-operator-bg: #f97316;
+      --color-operator-text: #111827;
+      --color-control-bg: #374151;
+      --color-clear-bg: #dc2626;
+      --color-clear-text: #fef2f2;
+      --color-equal-bg: #22c55e;
+      --color-equal-text: #022c22;
+      --color-shadow: rgba(15, 23, 42, 0.5);
+      --color-focus: #60a5fa;
+      color-scheme: light;
+    }
+
+    .theme-dark
+    {
+      --color-body-bg: #0b1220;
+      --color-panel-bg: #111827;
+      --color-panel-text: #f9fafb;
+      --color-display-bg: #020617;
+      --color-display-subtext: #9ca3af;
+      --color-button-bg: #1f2937;
+      --color-button-text: #e5e7eb;
+      --color-operator-bg: #f97316;
+      --color-operator-text: #111827;
+      --color-control-bg: #374151;
+      --color-clear-bg: #dc2626;
+      --color-clear-text: #fef2f2;
+      --color-equal-bg: #22c55e;
+      --color-equal-text: #022c22;
+      --color-shadow: rgba(15, 23, 42, 0.55);
+      --color-focus: #60a5fa;
+      color-scheme: dark;
+    }
+
+    .theme-light
+    {
+      --color-body-bg: #f8fafc;
+      --color-panel-bg: #ffffff;
+      --color-panel-text: #0f172a;
+      --color-display-bg: #e2e8f0;
+      --color-display-subtext: #475569;
+      --color-button-bg: #e5e7eb;
+      --color-button-text: #0f172a;
+      --color-operator-bg: #fb923c;
+      --color-operator-text: #0f172a;
+      --color-control-bg: #cbd5e1;
+      --color-clear-bg: #ef4444;
+      --color-clear-text: #fef2f2;
+      --color-equal-bg: #22c55e;
+      --color-equal-text: #022c22;
+      --color-shadow: rgba(100, 116, 139, 0.25);
+      --color-focus: #2563eb;
+      color-scheme: light;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -19,20 +82,63 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f3f4f6;
-    }
-
-    .calculator {
-      width: 320px;
-      background: #111827;
-      color: #f9fafb;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.5);
+      background: var(--color-body-bg);
+      transition: background 0.3s ease;
       padding: 16px;
     }
 
+    .calculator {
+      width: 340px;
+      background: var(--color-panel-bg);
+      color: var(--color-panel-text);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px var(--color-shadow);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-panel-text);
+    }
+
+    .theme-toggle {
+      background: transparent;
+      color: var(--color-panel-text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .theme-light .theme-toggle {
+      border-color: rgba(15, 23, 42, 0.1);
+    }
+
+    .theme-light .theme-toggle:hover {
+      background: rgba(15, 23, 42, 0.04);
+      border-color: rgba(15, 23, 42, 0.16);
+    }
+
     .display {
-      background: #020617;
+      background: var(--color-display-bg);
       border-radius: 12px;
       padding: 12px;
       text-align: right;
@@ -41,13 +147,12 @@
       flex-direction: column;
       justify-content: center;
       gap: 4px;
-      margin-bottom: 16px;
       overflow: hidden;
     }
 
     .display-small {
       font-size: 14px;
-      color: #9ca3af;
+      color: var(--color-display-subtext);
       min-height: 18px;
       word-wrap: break-word;
     }
@@ -56,6 +161,7 @@
       font-size: 32px;
       font-weight: 600;
       word-wrap: break-word;
+      color: var(--color-panel-text);
     }
 
     .buttons {
@@ -72,31 +178,31 @@
       font-weight: 500;
       cursor: pointer;
       transition: background 0.15s, transform 0.05s, box-shadow 0.1s;
-      background: #1f2937;
-      color: #e5e7eb;
+      background: var(--color-button-bg);
+      color: var(--color-button-text);
       box-shadow: 0 2px 4px rgba(0,0,0,0.25);
     }
 
     button.operator {
-      background: #f97316;
-      color: #111827;
+      background: var(--color-operator-bg);
+      color: var(--color-operator-text);
       font-weight: 600;
     }
 
     button.control {
-      background: #374151;
-      color: #e5e7eb;
+      background: var(--color-control-bg);
+      color: var(--color-button-text);
     }
 
     /* Красная кнопка очистки (C / AC) */
     button[data-action="clear"] {
-      background: #dc2626;
-      color: #fef2f2;
+      background: var(--color-clear-bg);
+      color: var(--color-clear-text);
     }
 
     button.equal {
-      background: #22c55e;
-      color: #022c22;
+      background: var(--color-equal-bg);
+      color: var(--color-equal-text);
       font-weight: 700;
     }
 
@@ -110,13 +216,17 @@
     }
 
     button:focus-visible {
-      outline: 2px solid #60a5fa;
+      outline: 2px solid var(--color-focus);
       outline-offset: 2px;
     }
   </style>
 </head>
 <body>
   <div class="calculator" aria-label="Простой калькулятор">
+    <div class="toolbar">
+      <span class="title">Простой калькулятор</span>
+      <button id="themeToggle" class="theme-toggle" type="button">☀️ Светлая тема</button>
+    </div>
     <div class="display">
       <div id="history" class="display-small"></div>
       <div id="result" class="display-main">0</div>
@@ -149,46 +259,123 @@
   </div>
 
   <script>
-    (function () {
+    (function ()
+    {
       const resultEl = document.getElementById("result");
       const historyEl = document.getElementById("history");
       const buttons = document.querySelector(".buttons");
+      const themeToggle = document.getElementById("themeToggle");
+      const THEME_KEY = "calculator-theme";
 
       let currentValue = "0";
       let previousValue = null;
       let operator = null;
       let justCalculated = false;
 
-      function formatNumber(value) {
-        if (value === "Error") return value;
+      /**
+       * @brief Returns preferred theme.
+       * @return {string} "light" or "dark".
+       */
+      function getPreferredTheme()
+      {
+        const storedTheme = localStorage.getItem(THEME_KEY);
+        const isStoredValid = storedTheme === "light" || storedTheme === "dark";
+        if (isStoredValid)
+        {
+          return storedTheme;
+        }
+
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (prefersDark)
+        {
+          return "dark";
+        }
+        return "light";
+      }
+
+      /**
+       * @brief Applies theme classes and button label.
+       * @param theme [in] Desired theme.
+       */
+      function applyTheme(theme)
+      {
+        const root = document.documentElement;
+        const isLight = theme === "light";
+        root.classList.remove("theme-light", "theme-dark");
+        root.classList.add(isLight ? "theme-light" : "theme-dark");
+        themeToggle.textContent = isLight ? "🌙 Темная тема" : "☀️ Светлая тема";
+      }
+
+      /**
+       * @brief Saves and sets the theme.
+       * @param theme [in] Theme value to store.
+       */
+      function setTheme(theme)
+      {
+        const normalized = theme === "light" ? "light" : "dark";
+        applyTheme(normalized);
+        localStorage.setItem(THEME_KEY, normalized);
+      }
+
+      /**
+       * @brief Formats number for display.
+       * @param value [in] String numeric value.
+       * @return {string} Formatted value.
+       */
+      function formatNumber(value)
+      {
+        const isError = value === "Error";
+        if (isError)
+        {
+          return value;
+        }
         const num = Number(value);
-        if (!Number.isFinite(num)) return "Error";
+        const isFiniteNumber = Number.isFinite(num);
+        if (!isFiniteNumber)
+        {
+          return "Error";
+        }
 
         // Ограничиваем длину вывода
         const str = num.toString();
-        if (str.length > 12) {
+        const isLong = str.length > 12;
+        if (isLong)
+        {
           return num.toExponential(6).replace(".", ",");
         }
         return str.replace(".", ",");
       }
 
-      function parseInput(str) {
-        // Заменяем запятую на точку для JS
+      /**
+       * @brief Converts input text to number.
+       * @param str [in] Value with comma or dot.
+       * @return {number} Parsed number.
+       */
+      function parseInput(str)
+      {
         const normalized = String(str).replace(",", ".");
         const num = Number(normalized);
         return num;
       }
 
-      function updateDisplay() {
-        resultEl.textContent = formatNumber(currentValue);
+      /**
+       * @brief Updates display values.
+       */
+      function updateDisplay()
+      {
         const opSymbol = operator || "";
-        historyEl.textContent =
-          previousValue !== null && opSymbol
-            ? formatNumber(previousValue) + " " + opSymbol
-            : "";
+        const hasHistory = (previousValue !== null) && (opSymbol);
+        resultEl.textContent = formatNumber(currentValue);
+        historyEl.textContent = hasHistory
+          ? formatNumber(previousValue) + " " + opSymbol
+          : "";
       }
 
-      function clearAll() {
+      /**
+       * @brief Resets calculator state.
+       */
+      function clearAll()
+      {
         currentValue = "0";
         previousValue = null;
         operator = null;
@@ -196,40 +383,70 @@
         updateDisplay();
       }
 
-      function handleDigit(digit) {
-        if (justCalculated) {
+      /**
+       * @brief Handles digit input.
+       * @param digit [in] Pressed digit or dot.
+       */
+      function handleDigit(digit)
+      {
+        const isJustCalculated = justCalculated;
+        if (isJustCalculated)
+        {
           currentValue = digit === "." ? "0." : digit;
           justCalculated = false;
           updateDisplay();
           return;
         }
 
-        if (digit === ".") {
-          if (currentValue.includes(".") || currentValue.includes(",")) return;
+        const isDot = digit === ".";
+        const hasDot = currentValue.includes(".") || currentValue.includes(",");
+        if (isDot)
+        {
+          if (hasDot)
+          {
+            return;
+          }
           currentValue += ".";
-        } else {
-          if (currentValue === "0") {
+        }
+        else
+        {
+          const isZero = currentValue === "0";
+          if (isZero)
+          {
             currentValue = digit;
-          } else {
+          }
+          else
+          {
             currentValue += digit;
           }
         }
         updateDisplay();
       }
 
-      function handleOperator(nextOperator) {
-        if (currentValue === "Error") {
+      /**
+       * @brief Handles operator selection.
+       * @param nextOperator [in] Operator symbol.
+       */
+      function handleOperator(nextOperator)
+      {
+        const isError = currentValue === "Error";
+        if (isError)
+        {
           clearAll();
           return;
         }
 
         const inputValue = parseInput(currentValue);
+        const shouldCalculate = operator && (previousValue !== null) && (!justCalculated);
 
-        if (operator && previousValue !== null && !justCalculated) {
+        if (shouldCalculate)
+        {
           const result = performCalculation(previousValue, inputValue, operator);
           currentValue = String(result);
           previousValue = result;
-        } else {
+        }
+        else
+        {
           previousValue = inputValue;
         }
 
@@ -239,9 +456,23 @@
         updateDisplay();
       }
 
-      function performCalculation(a, b, op) {
-        if (!Number.isFinite(a) || !Number.isFinite(b)) return NaN;
-        switch (op) {
+      /**
+       * @brief Performs calculation based on operator.
+       * @param a [in] Left operand.
+       * @param b [in] Right operand.
+       * @param op [in] Operator.
+       * @return {number} Result value.
+       */
+      function performCalculation(a, b, op)
+      {
+        const isAValid = Number.isFinite(a);
+        const isBValid = Number.isFinite(b);
+        if ((!isAValid) || (!isBValid))
+        {
+          return NaN;
+        }
+        switch (op)
+        {
           case "+": return a + b;
           case "-": return a - b;
           case "×": return a * b;
@@ -250,15 +481,28 @@
         }
       }
 
-      function handleEquals() {
-        if (operator === null || previousValue === null) return;
+      /**
+       * @brief Calculates expression when equals pressed.
+       */
+      function handleEquals()
+      {
+        const hasOperator = operator !== null;
+        const hasPrevious = previousValue !== null;
+        if ((!hasOperator) || (!hasPrevious))
+        {
+          return;
+        }
 
         const current = parseInput(currentValue);
         const result = performCalculation(previousValue, current, operator);
+        const isResultFinite = Number.isFinite(result) && (!Number.isNaN(result));
 
-        if (!Number.isFinite(result) || Number.isNaN(result)) {
+        if (!isResultFinite)
+        {
           currentValue = "Error";
-        } else {
+        }
+        else
+        {
           currentValue = String(result);
         }
 
@@ -271,54 +515,94 @@
         resultEl.textContent = formatNumber(currentValue);
       }
 
-      function handlePercent() {
+      /**
+       * @brief Converts current number to percent.
+       */
+      function handlePercent()
+      {
         const num = parseInput(currentValue);
-        if (!Number.isFinite(num)) return;
+        const isValid = Number.isFinite(num);
+        if (!isValid)
+        {
+          return;
+        }
         currentValue = String(num / 100);
         updateDisplay();
       }
 
-      function handleSign() {
+      /**
+       * @brief Toggles sign of current number.
+       */
+      function handleSign()
+      {
         const num = parseInput(currentValue);
-        if (!Number.isFinite(num)) return;
+        const isValid = Number.isFinite(num);
+        if (!isValid)
+        {
+          return;
+        }
         currentValue = String(-num);
         updateDisplay();
       }
 
-      buttons.addEventListener("click", function (event) {
+      buttons.addEventListener("click", function (event)
+      {
         const target = event.target;
-        if (!(target instanceof HTMLButtonElement)) return;
+        if (!(target instanceof HTMLButtonElement))
+        {
+          return;
+        }
 
         const digit = target.getAttribute("data-digit");
         const op = target.getAttribute("data-operator");
         const action = target.getAttribute("data-action");
 
-        if (digit !== null) {
-          if (digit === ",") {
+        if (digit !== null)
+        {
+          if (digit === ",")
+          {
             handleDigit(".");
-          } else {
+          }
+          else
+          {
             handleDigit(digit);
           }
           return;
         }
 
-        if (op !== null) {
+        if (op !== null)
+        {
           handleOperator(op);
           return;
         }
 
-        if (action === "clear") {
+        if (action === "clear")
+        {
           clearAll();
-        } else if (action === "equals") {
+        }
+        else if (action === "equals")
+        {
           handleEquals();
-        } else if (action === "percent") {
+        }
+        else if (action === "percent")
+        {
           handlePercent();
-        } else if (action === "sign") {
+        }
+        else if (action === "sign")
+        {
           handleSign();
         }
       });
 
+      themeToggle.addEventListener("click", function ()
+      {
+        const isLight = document.documentElement.classList.contains("theme-light");
+        const nextTheme = isLight ? "dark" : "light";
+        setTheme(nextTheme);
+      });
+
       // Инициализация
+      setTheme(getPreferredTheme());
       updateDisplay();
     })();
   </script>
